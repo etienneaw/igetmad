@@ -54,3 +54,51 @@ def mention_user(user_id):
     return "<@"+user_id+">"
 
 
+
+def create_new_event(user_id):
+    interactive = {
+        "text": "ok "+mention_user(user_id)+" tu es une baltringue qui arrive aps à se concentrer ?",
+        "attachments": [
+            {
+                "text": "Commence par cdéfinir à quel point tu es un lâche",
+                "fallback": "akoicaser1folebak",
+                "callback_id": "kolbakeydi",
+                "color": "#2cb42c",
+                "attachment_type": "default",
+                "actions":[
+                    {
+                        "name": "day",
+                        "text": "lâche de compet'",
+                        "type": "button",
+                        "value": "tomorrow"
+                    },
+                    {
+                        "name": "day",
+                        "text": "lâche de Sevran",
+                        "type": "button",
+                        "value": "after tomorrow"
+                    },
+                    {
+                        "name": "day",
+                        "text": "lâche",
+                        "type": "button",
+                        "style": "danger",
+                        "value": "later"
+                    }
+                ]
+            }
+        ]
+    }
+
+    return jsonify(interactive) #jsonify est une réponse (une classe slack)
+
+@igetmad.route('/command/', methods=['POST'])
+def start_command():
+    if request.method == 'GET':
+        return "get method"
+    elif request.method == 'POST':
+        is_true = verify_slack_request(request)
+
+        pprint.pprint(request.form)
+
+        return create_new_event(request.form["user_id"])
