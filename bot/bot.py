@@ -110,21 +110,23 @@ def coffee_break_next():
             
         }
 
-        requests.post(coffee_break_answer['response_url'], json.dumps(message))
+        no_answer = requests.post(coffee_break_answer['response_url'], json.dumps(message))
+        print(no_answer.status_code,no_answer.text)
+        return Response(status=200)
 
     if coffee_break_answer['actions'][0]['value'] == 'yes' and coffee_break_answer['actions'][0]["name"] =='plan_coffee_break':
         message = { "text" : " En route vers la pause café ! :rocket:"
             
         }
 
-        requests.post(coffee_break_answer['response_url'], json.dumps(message))
-
+        yes_answer = requests.post(coffee_break_answer['response_url'], json.dumps(message))
+        print(yes_answer.status_code,yes_answer.text)
     
 
         optin_menu = {
-        "channel" : "test_igetmad",
+        "channel" : "général",
         "as_user" : "true",
-        "text": "Salut à tous ! :spock-hand: \n "+mention_user(coffee_break_answer['user']['id'])+" propose une petite pause café :coffee: /n *Qui en est* ? C'est important d'aérer ses neurones et de se dégourdir les pattes ! :nerd_face:",
+        "text": "Salut à tous ! :spock-hand: \n "+mention_user(coffee_break_answer['user']['id'])+" propose une petite pause café :coffee:  *Qui en est* ?  \n C'est important d'aérer ses neurones et de se dégourdir les pattes ! :nerd_face:",
         "attachments": [
             {            
                 "fallback": "akoicaser1folebak2",
